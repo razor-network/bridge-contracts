@@ -1,0 +1,49 @@
+cache/
+hh-cache/
+artifacts/
+typechain-types/
+# Ignore Environment Variables!
+.env
+.env.prod
+.npmrc
+
+# Ignore all vscode settings
+.vscode/
+lcov.info
+
+# Ignore flattened files
+flattened.txt
+
+broadcast
+.DS_Store
+node_modules
+package-lock.json
+.contract-deployment.tmp.json
+.previous-deployment-addresses
+coverage/
+coverage.json
+deployments/local
+deployments/localhost
+data/abi
+deployments/skale/solcInputs
+deployed/
+lcov.info
+
+# Initially Ignore all folders
+out/*
+
+# Except Bridge, Token and Manager Folders
+!out/Bridge.sol
+!out/BridgeToken.sol
+!out/SourceChain.sol
+!out/*Manager.sol
+
+# Ignore Interface and Storage folders of all managers
+out/I*
+out/*Storage.sol
+
+# Initially ignore all json files
+out/*/*.json
+
+# Except abi.json files in Bridge and Manager folders
+!out/*/*.abi.json

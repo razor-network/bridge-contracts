@@ -1,0 +1,30 @@
+{
+    "extends": "solhint:recommended",
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "avoid-suicide": "error",
+      "compiler-version": ["error", "^0.8.0"],
+      "const-name-snakecase": "error",
+      "contract-name-camelcase": "warn",
+      "event-name-camelcase": "error",
+      "func-name-mixedcase": "error",
+      "func-visibility": ["error", { "ignoreConstructors": true }],
+      "imports-on-top": "warn",
+      "mark-callable-contracts": "off",
+      "max-line-length": ["warn", 140],
+      "no-unused-vars": "error",
+      "not-rely-on-time" : "off",
+      "ordering": "warn",
+      "prettier/prettier": "warn",
+      "private-vars-leading-underscore": "error",
+      "quotes": ["error","double"],
+      "reentrancy": "error",
+      "var-name-mixedcase": "error",
+      "visibility-modifier-order": "error",
+      "reason-string": "error",
+      "max-states-count": ["warn",22]
+    }
+  }
+  

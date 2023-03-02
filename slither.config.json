@@ -1,0 +1,5 @@
+{
+    "detectors_to_exclude": "solc-version,conformance-to-solidity-naming-conventions",
+    "filter_paths": "(lib/|test/)",
+    "compile_force_framework": "foundry" 
+}

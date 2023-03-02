@@ -1,0 +1,82 @@
+{
+  "name": "@razor-network/bridge-contracts",
+  "version": "0.0.5",
+  "description": "These are the contracts for Razor Network Bridge",
+  "author": "Razor Network",
+  "private": false,
+  "files": [
+    "out/**/*"
+  ],
+  "publishConfig": {
+    "@razor-network:registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/razor-network/bridge-contracts.git"
+  },
+  "devDependencies": {
+    "@ethersproject/abi": "^5.6.4",
+    "@ethersproject/providers": "^5.6.8",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.3",
+    "@nomicfoundation/hardhat-toolbox": "^1.0.2",
+    "@nomiclabs/hardhat-ethers": "^2.1.0",
+    "@nomiclabs/hardhat-etherscan": "^3.1.0",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@typechain/ethers-v5": "^10.1.0",
+    "@types/elliptic": "^6.4.14",
+    "@types/node": "^18.6.2",
+    "ethereum-waffle": "^3.4.4",
+    "ethers": "^5.6.9",
+    "hardhat": "^2.11.1",
+    "hardhat-abi-exporter": "^2.10.0",
+    "hardhat-deploy": "^0.11.12",
+    "hardhat-gas-reporter": "^1.0.8",
+    "solidity-coverage": "^0.7.21",
+    "ts-node": "^10.9.1",
+    "typechain": "^8.1.0",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.7.2",
+    "@typechain/hardhat": "^6.1.2",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "axios": "^1.1.2",
+    "dotenv": "^16.0.1",
+    "elliptic": "^6.5.4",
+    "eslint": "^8.21.0",
+    "eslint-config-prettier": "^8.5.0",
+    "fs": "^0.0.1-security",
+    "hardhat-ethernal": "^3.0.2",
+    "hardhat-preprocessor": "^0.1.4",
+    "lint": "^0.7.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.7.1",
+    "prettier-plugin-solidity": "^1.0.0-dev.23",
+    "solc": "^0.8.15",
+    "solhint": "^3.3.7",
+    "solhint-plugin-prettier": "^0.0.5",
+    "ttab": "^0.7.3",
+    "wait-on": "^6.0.1"
+  },
+  "scripts": {
+    "cp-example-env": "cp .env.example .env",
+    "compile": "rm -rf out && forge build --extra-output-files abi",
+    "deploy": "./scripts/deploy.sh",
+    "tab:devnet": "ttab npx hardhat node",
+    "tab:adminScript": "ttab npx wait-on http://localhost:8545 && npx hardhat run --network hardhat scripts/adminScript.ts",
+    "devnet": "run-s tab:devnet tab:adminScript",
+    "setup:devnet": "npx hardhat node",
+    "adminScript:devnet": "npx hardhat run --network hardhat scripts/adminScript.ts",
+    "adminScript:skale": "npx hardhat run --network skale scripts/adminScript.ts",
+    "coverage": "forge coverage",
+    "coverage-report": "forge coverage --report lcov",
+    "lint": "npm run lint:sol && npm run lint:ts",
+    "lint:fix": "npm run lint:sol:fix",
+    "lint:sol": "solhint 'src/**/*.sol'",
+    "lint:sol:fix": "prettier 'src/**/*.sol' -w",
+    "lint:ts": "eslint . --ext .ts ",
+    "lint:ts:fix": "eslint --fix . --ext .ts",
+    "gasCost": "forge test --match-test testSetBlock  --gas-report > gas-report.txt && node gasCost.js"
+  }
+}

@@ -1,0 +1,147 @@
+version: 2.1
+jobs:
+  install_dependencies:
+    machine:
+      image: ubuntu-2004:2022.07.1
+    steps:
+      - checkout
+      - run:
+          name: Install yarn dependencies
+          command: |
+            yarn
+      - run:
+          name: Install foundry dependencies
+          command: |
+              curl -L https://foundry.paradigm.xyz | bash
+              source /home/circleci/.bashrc
+              foundryup
+
+  test:
+    machine:
+      image: ubuntu-2004:2022.07.1
+    resource_class: medium
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install foundry dependencies
+          command: |
+              curl -L https://foundry.paradigm.xyz | bash
+              source /home/circleci/.bashrc
+              foundryup
+      - run:
+          name: Run tests
+          command: |
+             CI=true FOUNDRY_PROFILE=ci forge test --gas-report -vvvv
+      - store_artifacts:
+          path: test
+          prefix: test
+
+  lint:
+    machine:
+      image: ubuntu-2004:2022.07.1
+    resource_class: medium
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install foundry dependencies
+          command: |
+              curl -L https://foundry.paradigm.xyz | bash
+              source /home/circleci/.bashrc
+              foundryup
+      - run:
+          name: Run foundry linter
+          command: forge fmt
+      - store_artifacts:
+          path: lint
+          prefix: lint
+
+  coverage:
+    machine:
+      image: ubuntu-2004:2022.07.1
+    resource_class: medium
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install foundry dependencies
+          command: |
+              curl -L https://foundry.paradigm.xyz | bash
+              source /home/circleci/.bashrc
+              foundryup
+      - run:
+          name: Run Coverage
+          command: forge coverage
+      # - coveralls/upload
+      - store_artifacts:
+          path: coverage
+          prefix: coverage
+
+  slither:
+    machine:
+      image: ubuntu-2004:2022.07.1
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: install -r requirements.txt 
+          command: pip3 install -r requirements.txt 
+      - run:
+          name: Install foundry dependencies
+          command: |
+              curl -L https://foundry.paradigm.xyz | bash
+              source /home/circleci/.bashrc
+              foundryup  
+      - run:
+          name: Slither
+          command: |
+            slither .
+
+  gasCost:
+    machine:
+      image: ubuntu-2004:2022.07.1
+    resource_class: medium
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install foundry dependencies
+          command: |
+              curl -L https://foundry.paradigm.xyz | bash
+              source /home/circleci/.bashrc
+              foundryup
+      - run:
+          name: Run gasCost 
+          command: yarn && yarn run gasCost
+      - store_artifacts:
+          path: gasCost
+          prefix: gasCost
+
+workflows:
+  tests:
+    jobs:
+      # - checkout_source
+      - install_dependencies
+          # requires:
+          #   - checkout_source
+      - test:
+          requires:
+            - install_dependencies
+      - coverage:
+          requires:
+            - install_dependencies
+      - slither:
+          requires:
+            - install_dependencies
+      - lint:
+          requires:
+            - install_dependencies
+      - gasCost:
+          requires:
+            - install_dependencies

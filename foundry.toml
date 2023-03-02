@@ -1,0 +1,35 @@
+# Foundry Configuration File
+# Default definitions: https://github.com/gakonst/foundry/blob/b7917fa8491aedda4dd6db53fbb206ea233cd531/config/src/lib.rs#L782
+# See more config options at: https://github.com/gakonst/foundry/tree/master/config
+
+# The Default Profile
+[profile.default]
+solc_version = '0.8.15'
+auto_detect_solc = false
+optimizer = true
+optimizer_runs = 1_000
+fuzz_runs = 1_000
+remappings = [
+  "forge-std=lib/forge-std/src/",
+  "solmate=lib/solmate/src/",
+  "@openzeppelin=lib/openzeppelin-contracts/",
+]
+auto_detect_remappings = true
+src = 'src'
+out = 'out'
+libs = ['lib']
+cache_path  = 'cache'
+
+# Extreme Fuzzing CI Profile 
+[profile.ci]
+fuzz_runs = 100_000
+gas_reports = ["*"]
+
+[fmt]
+line_length = 140
+quote_style = 'double'
+tab_width = 4
+
+[rpc_endpoints]
+polygon = "https://polygon-rpc.com"
+skale = "https://skale-northstar1.01node.com:10008/"
